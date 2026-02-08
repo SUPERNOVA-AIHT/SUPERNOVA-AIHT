@@ -1,0 +1,146 @@
+# ==============================================================================
+# .zshrc - Zsh Configuration
+# ==============================================================================
+
+# --- Homebrew ---
+if [[ -f /opt/homebrew/bin/brew ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+elif [[ -f /usr/local/bin/brew ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+fi
+
+# --- History ---
+HISTFILE=~/.zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+
+# --- Key Bindings ---
+bindkey -e  # Emacs keybindings
+
+# --- Completion ---
+autoload -Uz compinit
+compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'  # Case-insensitive
+
+# --- Aliases ---
+
+# Navigation
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+
+# ls -> eza
+if command -v eza &>/dev/null; then
+    alias ls="eza --icons"
+    alias ll="eza -la --icons --git"
+    alias lt="eza -la --icons --tree --level=2"
+else
+    alias ll="ls -la"
+fi
+
+# cat -> bat
+if command -v bat &>/dev/null; then
+    alias cat="bat --paging=never"
+fi
+
+# Git shortcuts
+alias g="git"
+alias gs="git status"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
+alias gl="git log --oneline --graph --decorate -20"
+alias gd="git diff"
+alias gco="git checkout"
+alias gb="git branch"
+alias gpl="git pull"
+alias gf="git fetch"
+
+# Docker
+alias d="docker"
+alias dc="docker compose"
+alias dps="docker ps"
+
+# Python
+alias py="python3"
+alias pip="pip3"
+
+# Misc
+alias cls="clear"
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+alias mkdir="mkdir -p"
+alias df="df -h"
+alias du="du -h"
+alias grep="grep --color=auto"
+
+# --- Path ---
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+
+# --- Editor ---
+export EDITOR="nvim"
+export VISUAL="code"
+
+# --- Starship Prompt ---
+if command -v starship &>/dev/null; then
+    eval "$(starship init zsh)"
+fi
+
+# --- zoxide (smart cd) ---
+if command -v zoxide &>/dev/null; then
+    eval "$(zoxide init zsh)"
+    alias cd="z"
+fi
+
+# --- fzf ---
+if [[ -f ~/.fzf.zsh ]]; then
+    source ~/.fzf.zsh
+fi
+export FZF_DEFAULT_OPTS="--height 40% --layout=reverse --border"
+if command -v fd &>/dev/null; then
+    export FZF_DEFAULT_COMMAND="fd --type f --hidden --follow --exclude .git"
+fi
+
+# --- direnv ---
+if command -v direnv &>/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
+# --- NVM (Node Version Manager) ---
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+# --- Custom Functions ---
+
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Quick find file
+ff() {
+    fd --type f "$1"
+}
+
+# Quick grep in files
+fg() {
+    rg "$1" "${2:-.}"
+}
+
+# Git commit with message
+gcm() {
+    git commit -m "$*"
+}
+
+# Show what ports are in use
+ports() {
+    lsof -iTCP -sTCP:LISTEN -n -P
+}

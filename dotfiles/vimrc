@@ -1,0 +1,82 @@
+" ==============================================================================
+" .vimrc - Vim/Neovim Configuration
+" ==============================================================================
+
+" --- General ---
+set nocompatible
+set encoding=utf-8
+set fileencoding=utf-8
+
+" --- UI ---
+set number                  " Show line numbers
+set relativenumber          " Relative line numbers
+set cursorline              " Highlight current line
+set showmatch               " Highlight matching brackets
+set laststatus=2            " Always show status line
+set signcolumn=yes          " Always show sign column
+set scrolloff=8             " Keep 8 lines above/below cursor
+set sidescrolloff=8
+set termguicolors           " True color support
+set mouse=a                 " Enable mouse
+set title                   " Set terminal title
+
+" --- Indentation ---
+set tabstop=4               " Tab width
+set shiftwidth=4            " Indent width
+set softtabstop=4
+set expandtab               " Spaces instead of tabs
+set smartindent
+set autoindent
+
+" --- Search ---
+set ignorecase              " Case insensitive search
+set smartcase               " Case sensitive if uppercase
+set incsearch               " Incremental search
+set hlsearch                " Highlight matches
+
+" --- Performance ---
+set updatetime=250
+set timeoutlen=500
+set lazyredraw
+
+" --- Files ---
+set nobackup
+set nowritebackup
+set noswapfile
+set undofile
+set undodir=~/.vim/undodir
+
+" --- Splits ---
+set splitright
+set splitbelow
+
+" --- Keymaps ---
+let mapleader = " "
+
+" Quick save/quit
+nnoremap <leader>w :w<CR>
+nnoremap <leader>q :q<CR>
+
+" Clear search highlight
+nnoremap <Esc> :nohlsearch<CR>
+
+" Better window navigation
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Move lines up/down in visual mode
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Keep cursor centered
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Clipboard
+nnoremap <leader>y "+y
+vnoremap <leader>y "+y
+nnoremap <leader>p "+p

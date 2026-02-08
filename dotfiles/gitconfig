@@ -1,0 +1,67 @@
+# ==============================================================================
+# .gitconfig - Git Configuration
+# ==============================================================================
+# After install, run:
+#   git config --global user.name "Your Name"
+#   git config --global user.email "your@email.com"
+
+[init]
+    defaultBranch = main
+
+[core]
+    editor = nvim
+    autocrlf = input
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+
+[pull]
+    rebase = true
+
+[push]
+    autoSetupRemote = true
+    default = current
+
+[fetch]
+    prune = true
+
+[rebase]
+    autoStash = true
+
+[alias]
+    s = status
+    co = checkout
+    br = branch
+    ci = commit
+    lg = log --oneline --graph --decorate -20
+    last = log -1 HEAD --stat
+    unstage = reset HEAD --
+    undo = reset --soft HEAD~1
+    amend = commit --amend --no-edit
+    wip = !git add -A && git commit -m 'WIP'
+    branches = branch -a --sort=-committerdate
+    tags = tag -l --sort=-v:refname
+    stashes = stash list
+    aliases = config --get-regexp alias
+    contributors = shortlog -sn --no-merges
+
+[color]
+    ui = auto
+
+[help]
+    autocorrect = prompt
+
+[credential]
+    helper = osxkeychain

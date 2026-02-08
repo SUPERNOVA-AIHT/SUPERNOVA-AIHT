@@ -1,0 +1,65 @@
+# ==============================================================================
+# starship.toml - Starship Prompt Configuration
+# ==============================================================================
+# Docs: https://starship.rs/config/
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$python\
+$nodejs\
+$rust\
+$golang\
+$docker_context\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+
+[directory]
+truncation_length = 3
+truncation_symbol = ".../"
+style = "bold blue"
+
+[git_branch]
+format = "[$symbol$branch]($style) "
+symbol = " "
+style = "bold purple"
+
+[git_status]
+format = '([$all_status$ahead_behind]($style) )'
+style = "bold red"
+
+[python]
+format = '[${symbol}${pyenv_prefix}(${version})]($style) '
+symbol = " "
+style = "yellow"
+
+[nodejs]
+format = "[$symbol($version)]($style) "
+symbol = " "
+style = "green"
+
+[rust]
+format = "[$symbol($version)]($style) "
+symbol = " "
+style = "bold red"
+
+[golang]
+format = "[$symbol($version)]($style) "
+symbol = " "
+style = "bold cyan"
+
+[docker_context]
+format = "[$symbol$context]($style) "
+symbol = " "
+style = "blue"
+
+[cmd_duration]
+min_time = 2_000
+format = "[$duration]($style) "
+style = "bold yellow"
